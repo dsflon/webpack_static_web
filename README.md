@@ -1,0 +1,93 @@
+# webpack4 を利用した静的webサイト開発環境
+
+静的webサイトを構築するためのwebpackの設定です。
+
+## scss to css
+css-loader 及び sass-loader を利用し、scss to css のコンパイルに対応しています。  
+また、postcss-loaderを利用しautoprefixer及びcssnanoに対応しています。
+
+autoprefixerの設定は postcss.config.js で変更可能です。
+
+## ECMA script to Native Javascript
+babel-loaderを利用し、ECMA scriptに対応しています。
+
+## Web Server
+browser-sync 及び browser-sync-webpack-plugin を利用し、ローカルサーバを立ち上げます。  
+auto reloadにも対応しています。
+
+----
+
+# webpack.config.js
+
+## Root path setting
+ルートパス名を設定します。
+```
+const ROOT_PATH_NAME = 'htdocs';
+```
+
+## SCSS setting
+出力先ディレクトリ(SCSS_BUILD_PATH)とソースファイル(SCSS_ENTRY)を設定します。  
+SCSS_ENTRYオブジェクトでは、プロパティ名がそのままcssファイル名となります。  
+また、プロパティ名を '../style' や 'sample/style' などとすることで出力先ディレクトリを移動させることができます。
+```
+const SCSS_BUILD_PATH = '/common/css';
+const SCSS_ENTRY = {
+    'style': './' + ROOT_PATH_NAME + '/common/src/scss/style.scss'
+}
+```
+
+## JS setting
+出力先ディレクトリ(JS_BUILD_PATH)とソースファイル(JS_ENTRY)を設定します。  
+JS_ENTRYオブジェクトでは、プロパティ名がそのままjsファイル名となります。  
+また、プロパティ名を '../main' や 'sample/main' などとすることで出力先ディレクトリを移動させることができます。
+```
+const JS_BUILD_PATH = '/common/js';
+const JS_ENTRY = {
+    'main': './' + ROOT_PATH_NAME + '/common/src/js/main.js'
+}
+```
+
+## browser-sync setting
+BROWSER_SYNCオブジェクトにおいて必要な設定を行います。  
+（ webpack-dev-server では静的webサイト構築に必要な機能を得られなかったので browser-sync を利用しています。 ）
+```
+const BROWSER_SYNC = {
+    host: 'localhost',
+    port: 3000,
+    server: { baseDir: [ROOT_PATH_NAME] },
+    files: [
+        "**/*.html",
+        "**/*.css",
+        "**/*.js",
+        "!postcss.config.js",
+        "!webpack.config.js"
+    ],
+    open: false
+}
+```
+
+----
+
+# RUN
+
+## ローカルサーバ起動
+css、ｊｓファイルともにsouceMapが有効なった状態で出力されます。  
+css、ｊｓファイルともにsouceMapが有効になります。  
+デフォルトではhtml、css、ｊｓファイルの変更に応じブラウザが auto reload します。
+```
+$ npm start
+```
+
+## 本番用（production）ビルド
+css、ｊｓファイルともにsouceMapが無効なった状態で出力されます。
+```
+$ npm run build
+```
+
+## 開発用（development）ビルド
+css、ｊｓファイルともにsouceMapが有効なった状態で出力されます。  
+また、minimizeが解除されます。
+```
+$ npm run build:dev
+```
+
