@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// gradient
+//
+// ---------------------------------------------------------------------------
+
+@mixin gradient( $type: "linear", $direction: "", $start-color: #fff, $end-color: #000, $start-percent: 0%, $end-percent: 100%, $text: "false" ){
+
+    @if $type == "linear" {
+
+        @if $direction == "" { $direction : to bottom; }
+        background: linear-gradient( $direction, $start-color $start-percent, $end-color $end-percent );
+
+    } @if $type == "radial" {
+
+        @if $direction == "" { $direction : at center; }
+        background: radial-gradient( $direction, $start-color $start-percent, $end-color $end-percent );
+    }
+    
+    @if $text == "true" {
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+}

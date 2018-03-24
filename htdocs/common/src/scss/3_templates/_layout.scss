@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+.fw {
+
+	min-width: $width_main + px;
+	overflow: hidden;
+	font-family: $font_base;
+	color : $color_text;
+	font-size: $font-size_base + px;
+	line-height: $line-height_base;
+
+	#container {
+
+		#contents {
+			float: left;
+			width: $width_contents + px;
+			&.f-max { float: inherit; width: 100%; }
+		}
+
+		#side { width: $width_side + px; float: right; }
+
+	}
+
+
+	// -------------------------------------------
+	// Small Width Layout
+	// -------------------------------------------
+	@include max( $width_main ){
+
+		.f-inner {
+			width: 100%;
+			margin: 0;
+			padding: 0 20px;
+		}
+
+	}
+
+
+	// -------------------------------------------
+	// Liquid Layout
+	// -------------------------------------------
+	@include max( s ){
+
+		min-width: 320px;
+
+		#container {
+
+			#contents {
+				float: inherit; width: 100%;
+				&.f-max { float: inherit; width: 100%; }
+			}
+			#side { width: initial; float: inherit; }
+
+		}
+
+	}
+
+
+}//.fw

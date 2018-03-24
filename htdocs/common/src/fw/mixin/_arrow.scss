@@ -1,0 +1,94 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// arrow
+//
+// ---------------------------------------------------------------------------
+@mixin arrow($color:#000000, $size:6, $width:1,$layout:left,$direction:right) {
+	&:before,&:after {
+	}
+	@if $layout == left {
+		&:before {
+			content: "";
+			margin-right: 8px;
+			display: inline-block;
+			border-top: solid $width+px $color;
+			border-right: solid $width+px $color;
+			vertical-align: middle;
+			width: $size+px;
+			height: $size+px;
+		}
+	} @else if $layout == right {
+		&:after {
+			content: "";
+			margin-left: 8px;
+			display: inline-block;
+			border-top: solid $width+px $color;
+			border-right: solid $width+px $color;
+			vertical-align: middle;
+			width: $size+px;
+			height: $size+px;
+		}
+	}
+	@if $direction == top {
+		&:before,&:after { transform: rotate(-45deg); -webkit-transform: rotate(-45deg); -ms-transform: rotate(-45deg); margin-top: 1px; }
+	} @else if $direction == right {
+		&:before,&:after { transform: rotate(45deg); -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); margin-top: -1px; }
+	} @else if $direction == bottom {
+		&:before,&:after { transform: rotate(135deg); -webkit-transform: rotate(135deg); -ms-transform: rotate(135deg); margin-top: -5px; }
+	} @else if $direction == left {
+		&:before,&:after { transform: rotate(-135deg); -webkit-transform: rotate(-135deg); -ms-transform: rotate(-135deg); }
+	}
+}
+
+
+// ---------------------------------------------------------------------------
+//
+// arrowAbs
+//
+// ---------------------------------------------------------------------------
+@mixin arrowAbs($color:#000000, $size:6, $width:1,$layout:left,$position:0,$direction:right) {
+	position: relative;
+	&:before {
+		content: "";
+		display: block;
+		border-top: solid $width+px $color;
+		border-right: solid $width+px $color;
+		vertical-align: middle;
+		width: $size+px;
+		height: $size+px;
+		position: absolute;
+		top: 50%;
+	}
+	@if $layout == left {
+		&:before {
+			left: $position+px;
+		}
+	} @else if $layout == right {
+		&:before {
+			right: $position+px;
+		}
+	}
+	@if $direction == top {
+		&:before {
+			transform: translate(0,-50%) rotate(-45deg);
+			-webkit-transform: translate(0,-50%) rotate(-45deg);
+		}
+	} @else if $direction == right {
+		&:before {
+			transform: translate(0,-50%) rotate(45deg);
+			-webkit-transform: translate(0,-50%) rotate(45deg);
+		}
+	} @else if $direction == bottom {
+		&:before {
+			transform: translate(0,-50%) rotate(135deg);
+			-webkit-transform: translate(0,-50%) rotate(135deg);
+		}
+	} @else if $direction == left {
+		&:before {
+			transform: translate(0,-50%) rotate(-135deg);
+			-webkit-transform: translate(0,-50%) rotate(-135deg);
+		}
+	}
+}

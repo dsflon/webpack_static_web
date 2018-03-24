@@ -1,0 +1,31 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// Size
+//
+// ---------------------------------------------------------------------------
+
+@mixin top( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"top" );
+
+}
+
+@mixin right( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"right" );
+
+}
+
+@mixin bottom( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"bottom" );
+
+}
+
+@mixin left( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"left" );
+
+}

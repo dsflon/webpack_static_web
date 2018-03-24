@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+    @import "../fw/base/base_layout";
+    @import "../fw/base/normalize";
+
+.fw {
+
+    @import "../fw/base/column";
+    @import "../fw/base/flex";
+    @import "../fw/base/font_size";
+    @import "../fw/base/form";
+    @import "../fw/base/list";
+    @import "../fw/base/margin_padding";
+    @import "../fw/base/table_layout";
+    @import "../fw/base/table";
+    @import "../fw/base/text";
+    @import "../fw/base/box";
+
+}//.fw

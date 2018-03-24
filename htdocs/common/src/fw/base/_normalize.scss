@@ -1,0 +1,57 @@
+@charset "utf-8";
+
+html{
+
+	overflow: auto;
+	-ms-text-size-adjust: 100%;
+	-webkit-text-size-adjust: 100%;
+	
+}
+.fw  {
+
+	* {
+		box-sizing: border-box;
+		-webkit-text-size-adjust: 100%;
+	}
+	a {
+		cursor: pointer;
+		color: $color_link;
+		text-decoration: none;
+		-webkit-tap-highlight-color:rgba(0,0,0,0);
+	}
+	img {
+		max-width: 100%;
+		height:auto;
+		vertical-align: middle;
+	}
+	section {
+		@include clearfix;
+		&.f-section {
+			margin-top: $section_margin_top + px;
+		}
+	}
+	sup {
+		vertical-align: super;
+		line-height: 1;
+	}
+	sub {
+		vertical-align: sub;
+		line-height: 1;
+	}
+
+	strong { font-weight: bold; }
+
+	button {
+		cursor: pointer;
+	}
+	button,input {
+		font-family: $font_base;
+	}
+
+
+	input[type="text"],input[type="tel"],input[type="email"], textarea, input[type="submit"]{
+		-webkit-appearance: none;
+		border-radius: 0;
+	}
+
+}

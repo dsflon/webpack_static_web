@@ -1,0 +1,22 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// scrollbar
+//
+// ---------------------------------------------------------------------------
+
+@mixin scrollbar( $bg:$black0, $color:$black20, $size:10 ) {
+
+    &::-webkit-scrollbar-track{
+        background: $bg;
+    }
+    &::-webkit-scrollbar-thumb{
+        background: $color;
+    }
+    &::-webkit-scrollbar{
+        width: $size + px;
+        height: $size + px;
+    }
+    
+}

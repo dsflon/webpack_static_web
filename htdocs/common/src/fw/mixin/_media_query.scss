@@ -1,0 +1,91 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// Media Query
+//
+// ---------------------------------------------------------------------------
+
+@mixin min( $width ) {
+
+	// String（ s / m / l ... ）
+	@if type-of($width) == string {
+		$width: map-get($breakpoints, $width) + 1;
+	}
+
+	@media screen and (min-width: $width + px ) {
+		@content;
+	}
+
+}
+
+@mixin max( $width ) {
+
+	// String（ s / m / l ... ）
+	@if type-of($width) == string {
+		$width: map-get($breakpoints, $width);
+	}
+
+	@media screen and (max-width: $width + px ) {
+		@content;
+	}
+
+}
+
+@mixin minmax( $width-min, $width-max ) {
+
+	// String（ s / m / l ... ）
+	@if type-of($width-min) == string {
+		$width-min: map-get($breakpoints, $width-min) + 1;
+	}
+	@if type-of($width-max) == string {
+		$width-max: map-get($breakpoints, $width-max);
+	}
+
+	@media screen and (min-width: $width-min + px) and (max-width: $width-max + px) {
+		@content;
+	}
+
+}
+
+@mixin only( $breakpoint ) {
+
+	@if $responsive {
+
+		//最小
+		@if $breakpoint == GetDataMap( $breakpointsClean, 1, 'key' ) {
+
+			$width: map-get($breakpoints, $breakpoint);
+
+			@media screen and (max-width: $width + px) {
+				@content;
+			}
+
+		}
+		//最大
+		@else if not map-has-key($breakpointsClean, $breakpoint){
+
+			$width: GetDataMap( $breakpointsClean, length( $breakpointsClean ), 'val' );
+
+			@media screen and (min-width: $width + 1 + px) {
+				@content;
+			}
+
+		}
+		//中間
+		@else {
+
+			$index: GetIndexMap( $breakpointsClean, $breakpoint, 'key' );
+
+			$width-min: GetDataMap( $breakpointsClean, $index - 1, 'val' ); // 1つ前のブレイクポイントを取得
+			$width-max: map-get($breakpoints, $breakpoint);
+
+			@media screen and (min-width: $width-min + 1 + px) and (max-width: $width-max + px) {
+				@content;
+			}
+
+		}
+
+	}
+
+}

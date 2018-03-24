@@ -1,0 +1,332 @@
+@charset "utf-8";
+
+
+@function GetNextKeyMap( $map, $index ){
+
+	// $breakpointsCleanで最後に指定している次のブレイクポイント
+	$nextKey: GetDataMap( $map, $index, 'key' );
+	$nextKeyIndex: GetIndexMap( $breakpoints, $nextKey, 'key' );
+
+	@if $nextKey != 'xl' {
+		@return GetDataMap( $breakpoints, $nextKeyIndex + 1, 'key' ); //ブレイクポイント名前
+	}@else{
+		@return 'over'; //ブレイクポイント名前
+	}
+}
+
+// ---------------------------------------------------------------------------
+//
+// $breakpointsClean から指定したインデックスキーのデータを取得
+//
+// ---------------------------------------------------------------------------
+
+// $indexを元に値を取得
+@function GetDataMap( $map, $index, $type ){
+
+	$dataObj: nth( $map, $index );
+
+	@if $type == 'key' {
+		@return  nth( $dataObj, 1 );
+	}
+
+	@if $type == 'val' {
+		@return  nth( $dataObj, 2 );
+	}
+
+}
+
+
+// $targetを元にインデックス番号を取得
+@function GetIndexMap( $map, $target, $type ){
+
+	@for $i from 1 through length($map) {
+
+		$dataObj: nth( $map, $i );
+
+		@if $type == 'key' {
+
+			$dataKey: nth( $dataObj, 1 );
+			@if $dataKey == $target {
+				@return $i;
+			}
+
+		}
+
+		@if $type == 'val' {
+
+			$dataVal: nth( $dataObj, 2 );
+			@if $dataVal == $target {
+				@return $i;
+			}
+
+		}
+
+	}
+}
+
+
+// ---------------------------------------------------------------------------
+//
+// $breakpoints から有効な値が設定されているMap型データを作成
+//
+// ---------------------------------------------------------------------------
+
+$breakpointsClean: $breakpoints;
+
+@for $k from 1 through length($breakpoints) {
+
+	$dataKey: GetDataMap( $breakpoints, $k, 'key' );
+	$dataVal: GetDataMap( $breakpoints, $k, 'val' );
+
+	@if $dataVal == ''{
+
+		// 値が空の場合はMap型から除外
+		$breakpointsClean: map-remove( $breakpointsClean, $dataKey );
+
+	}
+
+}
+
+
+// ---------------------------------------------------------------------------
+//
+// ブレイクポイントが設定されているか判別（レスポンシブ有無）
+//
+// ---------------------------------------------------------------------------
+
+$responsive: length( $breakpointsClean ) > 0;
+
+
+// ---------------------------------------------------------------------------
+//
+// 可変長引数のブレイクポイント毎に、スタイルを出力
+// @include fontSize( 16px, 16px, 16px );
+//
+// ---------------------------------------------------------------------------
+
+@mixin SetPerBreakpointStyle( $val, $property ){
+
+	$length: length($val);
+
+	@for $i from 1 through $length {
+
+		@if $i <= length( $breakpointsClean ) + 1 {
+
+			@if $i == 1 {
+
+				#{$property}: nth($val, $i);
+
+			} @else {
+
+				@if not $mobile-first {
+
+					$index: length( $breakpointsClean ) - $i + 2; //インデックスキー（降順）
+					$breakpointWidth : GetDataMap( $breakpointsClean, $index, 'val' ); //ブレイクポイント横幅
+
+					@include max( $breakpointWidth ){
+						#{$property}: nth($val, $i);
+					}
+
+				} @else {
+
+					$index: $i - 1; //インデックスキー
+					$breakpointWidth : GetDataMap( $breakpointsClean, $index, 'val' ); //ブレイクポイント横幅
+
+					@include min( $breakpointWidth + 1 ){
+						#{$property}: nth($val, $i);
+					}
+
+				}
+
+			}
+
+		}@else{
+
+			@debug 'breakpointの定義数を超えています';
+
+		}
+
+	}
+}
+
+
+// ---------------------------------------------------------------------------
+//
+// ブレイクポイント毎に、@mixinを呼び出す
+// .f-col > .f-col2_m
+//
+// ---------------------------------------------------------------------------
+@mixin SetPerBreakpointMixin( $class, $gutter: '', $mixin: '' ) {
+
+
+	// Defaltの場合（ブレイクポイント不要）
+	$breakpoint : '';
+	@include InitMixin( $class, $gutter, $breakpoint, $mixin );
+
+
+	@if $responsive {
+
+		@for $j from 1 through length( $breakpointsClean ) {
+
+			@if not $mobile-first {
+
+
+				$index: length( $breakpointsClean ) - $j + 1; //インデックス番号（降順）
+				$breakpoint : GetDataMap( $breakpointsClean, $index, 'key' ); //ブレイクポイント名前
+				$breakpointWidth : GetDataMap( $breakpointsClean, $index, 'val' ); //ブレイクポイント横幅
+
+				@include max( GetDataMap( $breakpointsClean, $index, 'val' ) ){
+
+					@include InitMixin( $class, $gutter, $breakpoint, $mixin );
+
+				}
+
+
+
+			} @else {
+
+
+
+				$index: $j; //インデックス番号
+				$breakpointWidth : GetDataMap( $breakpointsClean, $index, 'val' ); //ブレイクポイント横幅
+
+				@if $j < length( $breakpointsClean ){
+
+					$breakpoint : GetDataMap( $breakpointsClean, $index + 1, 'key' ); //ブレイクポイント名前
+
+				}@else{
+
+					// $breakpointsCleanで最後に指定している次のブレイクポイント
+					$breakpoint : GetNextKeyMap( $breakpointsClean, $j );
+
+				}
+
+				@include min( $breakpointWidth + 1 ){
+
+					@include InitMixin( $class, $gutter, $breakpoint, $mixin );
+
+				}
+
+			}
+		}
+
+	}
+}
+
+
+// ---------------------------------------------------------------------------
+//
+// @mixin呼び出し
+//
+// ---------------------------------------------------------------------------
+
+@mixin InitMixin( $class, $gutter, $breakpoint, $mixin ){
+
+	// ブレイクポイント名
+	@if $breakpoint != "" {
+		$breakpoint: _#{$breakpoint}
+	}
+
+	@if $mixin == 'flex' {
+		@include flexWidth( $class, $gutter, $breakpoint );
+	}
+
+	@if $mixin == 'flexMg' {
+
+		@for $i from 0 through 16 {
+			$num: $i*5;
+
+			&.#{$class}_mg#{$num}#{$breakpoint} {
+
+				@include flexGutter( $num );
+				@include flexWidth( $class, $num, $breakpoint );
+
+			}
+
+		}
+	}
+
+	@if $mixin == 'flexMb' {
+
+		@for $i from 0 through 16 {
+
+			$num: $i*5;
+
+			&.#{$class}_mb#{$num}#{$breakpoint} {
+				margin-bottom: -#{$num}px;
+				& > * { margin-bottom: $num + px; }
+			}
+
+		}
+	}
+
+	@if $mixin == 'flexOrder' {
+
+		@for $i from 0 through 16 {
+
+			> .#{$class}_order#{$i}#{$breakpoint} {
+				order: #{$i};
+			}
+
+		}
+
+	}
+
+	@if $mixin == 'column' {
+
+		@include columnWidth( $class, $breakpoint );
+
+	}
+
+	@if $mixin == 'columnMg' {
+
+		@for $j from 0 through 16 {
+
+			$num: $j*5;
+
+			&.#{$class}_mg#{$num}#{$breakpoint} {
+				@include columnGutter( $num );
+			}
+
+		}
+
+	}
+
+	@if $mixin == 'columnMb' {
+
+		@for $j from 0 through 16 {
+
+	        $num: $j*5;
+
+			&.#{$class}_mb#{$num}#{$breakpoint} {
+	            margin-bottom: -#{$num}px;
+				& > * { margin-bottom: $num + px; }
+			}
+
+		}
+
+	}
+
+	@if $mixin == 'tableCell' {
+
+		@include columnWidth( $class, $breakpoint );
+
+		.#{$class}12#{$breakpoint} {
+			display: inline-block;
+		}
+
+	}
+
+	@if $mixin == 'tableBreak' {
+
+		&.#{$class}_break#{$breakpoint} {
+			th,td {
+				width: 100% !important;
+				display: block;
+				margin-top: -1px;
+			}
+		}
+
+	}
+
+}

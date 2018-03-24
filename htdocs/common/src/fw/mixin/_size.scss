@@ -1,0 +1,43 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// Size
+//
+// ---------------------------------------------------------------------------
+
+@mixin width( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"width" );
+
+}
+
+@mixin minWidth( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"min-width" );
+
+}
+
+@mixin maxWidth( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"max-width" );
+
+}
+
+@mixin height( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"height" );
+
+}
+
+@mixin minHeight( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"min-height" );
+
+}
+
+@mixin maxHeight( $val... ) {
+
+	@include SetPerBreakpointStyle( $val, $property:"max-height" );
+
+}
