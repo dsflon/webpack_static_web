@@ -5,6 +5,7 @@ let mode = process.argv.indexOf("production") !== -1 ? 'production' : 'developme
 if( process.argv.indexOf("--watch") !== -1 ) mode = 'development';
 
 let isDev = (mode === 'development');
+let scssMinimize = (process.env.npm_lifecycle_event !== 'build:dev');
 
 /***************************************
 ** Root path name
@@ -14,7 +15,7 @@ const ROOT_PATH_NAME = 'htdocs';
 /***************************************
 ** SCSS Setting
 ***************************************/
-const SCSS_BUILD_PATH = 'common/css';
+const SCSS_BUILD_PATH = '/common/css';
 const SCSS_ENTRY = {
     'style': './' + ROOT_PATH_NAME + '/common/src/scss/style.scss'
 }
@@ -22,12 +23,9 @@ const SCSS_ENTRY = {
 /***************************************
 ** JS Setting
 ***************************************/
-const JS_BUILD_PATH = 'common/js';
+const JS_BUILD_PATH = '/common/js';
 const JS_ENTRY = {
-    // 'file name': 'file path'
-    'main': './' + ROOT_PATH_NAME + '/common/src/js/main.js',
-    // ディレクトリを追加する場合は相対パスを挿入 、'../' でパスを遡れる、'output file path / file name': 'file path'
-    'sub/sub': './' + ROOT_PATH_NAME + '/common/src/js/sub.js'
+    'main': './' + ROOT_PATH_NAME + '/common/src/js/main.js'
 }
 
 /***************************************
@@ -47,6 +45,16 @@ const BROWSER_SYNC = {
     open: false
 }
 
+let pathsToClean = [
+    './' + ROOT_PATH_NAME + '/common/src/scss/',
+    SCSS_BUILD_PATH
+]
+let cleanOptions = {
+    root:     './' + ROOT_PATH_NAME + '/',
+    exclude:  ['no_need_file.js'],
+    verbose:  true,
+    dry:      false
+}
 
 /***************************************
 ** Webpack Config
@@ -54,14 +62,9 @@ const BROWSER_SYNC = {
 module.exports = [
     {
 
-        // メインのJS
         entry: JS_ENTRY,
-
-        // 出力ファイル
         output: {
-            //  出力ファイルのディレクトリ名
-            path: `${__dirname}/${ROOT_PATH_NAME}/${JS_BUILD_PATH}`,
-            // publicPath: `/${JS_BUILD_PATH}/`,
+            path: `${__dirname}/${ROOT_PATH_NAME}${JS_BUILD_PATH}`,
             filename: '[name].js'
         },
 
@@ -84,45 +87,47 @@ module.exports = [
         resolve: {
             extensions: ['.js'],
         },
-        devtool: (isDev ? 'source-map' : '')
+        devtool: (isDev ? 'inline-source-map' : '')
     },
     {
-
+        watchOptions : {
+            aggregateTimeout: 300
+        },
         entry: SCSS_ENTRY,
         output: {
-            path: `${__dirname}/${ROOT_PATH_NAME}/${SCSS_BUILD_PATH}`,
-            filename: '[name].css',
+            path: `${__dirname}/${ROOT_PATH_NAME}${SCSS_BUILD_PATH}`,
+            filename: 'no_need_file/[name].js'
         },
         module: {
             rules: [
                 {
-                    test: /\.(s)css$/,
+                    test: /\.scss$/,
                     use: [
                         MiniCssExtractPlugin.loader,
                         // CSSをバンドルするための機能
                         {
                             loader: 'css-loader',
                             options: {
-                                // オプションでCSS内のurl()メソッドを取り込む
-                                // url: true,
-                                // ソースマップの利用有無
                                 sourceMap: isDev,
-                                // 0 => no loaders (default);
-                                // 1 => postcss-loader;
-                                // 2 => postcss-loader, sass-loader
                                 importLoaders: 2,
-                                minimize: false
+                                minimize: scssMinimize
                             }
                         },
                         // autoprefixer を利用するために postcss を利用
                         {
                             loader: 'postcss-loader',
-                            options: { sourceMap: isDev }
+                            options: {
+                                sourceMap: isDev,
+                                minimize: scssMinimize
+                            }
                         },
                         // Sassをバンドルするための機能
                         {
                             loader: 'sass-loader',
-                            options: { sourceMap: isDev }
+                            options: {
+                                sourceMap: isDev,
+                                minimize: scssMinimize
+                            }
                         }
                     ]
                 }
@@ -133,12 +138,11 @@ module.exports = [
         },
         plugins: [
             new MiniCssExtractPlugin({
-                filename: './[name].css',
-                chunkFilename: './[id].css'
+                filename: '[name].css'
             }),
             new BrowserSyncPlugin(BROWSER_SYNC)
         ],
-        devtool: (isDev ? 'source-map' : '')
+        devtool: (isDev ? 'inline-source-map' : '')
     }
 ]
 

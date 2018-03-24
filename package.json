@@ -1,5 +1,5 @@
 {
-  "name": "reduxProject2",
+  "name": "webpack_static_web",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,7 +7,6 @@
     "start": "webpack --watch --mode production",
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "build:prd": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
