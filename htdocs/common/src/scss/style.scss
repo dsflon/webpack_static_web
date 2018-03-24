@@ -1,32 +1,7 @@
 @charset "utf-8";
 
-// ----------------------------------------------------------
-// font-family,size,color,width, etc.
-// ----------------------------------------------------------
-@import "setting/setting";
+@import "sample/sample";
 
-// ----------------------------------------------------------
-// Megane Template Core File
-// ----------------------------------------------------------
-@import "../fw/reset";
-@import "mixin";
-@import "base";
-
-// ----------------------------------------------------------
-// Atomic Design
-// ----------------------------------------------------------
-
-//Atoms
-@import "0_atoms/atoms";
-
-//Molecules
-@import "1_molecules/molecules";
-
-//Organisms
-@import "2_organisms/organisms";
-
-//Templates
-@import "3_templates/templates";
-
-//Pages
-@import "4_pages/pages";
+body {
+    background: #F7F7F7;
+}
