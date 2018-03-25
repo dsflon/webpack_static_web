@@ -8,6 +8,9 @@ css-loader 及び sass-loader を利用し、scss to css のコンパイルに�
 
 autoprefixerの設定は postcss.config.js で変更可能です。
 
+※ css出力に extract-text-webpack-plugin を利用しているが、2018.3 時点では v4.0.0-beta.0 しか動作しない ）
+
+
 ## ECMA script to Native Javascript
 babel-loaderを利用し、ECMA scriptに対応しています。
 
@@ -34,6 +37,7 @@ const SCSS_BUILD_PATH = '/common/css';
 const SCSS_ENTRY = {
     'style': './' + ROOT_PATH_NAME + '/common/src/scss/style.scss'
 }
+const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 ```
 
 ## JS setting
@@ -45,6 +49,7 @@ const JS_BUILD_PATH = '/common/js';
 const JS_ENTRY = {
     'main': './' + ROOT_PATH_NAME + '/common/src/js/main.js'
 }
+const JS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 ```
 
 ## browser-sync setting
@@ -90,4 +95,3 @@ css、ｊｓファイルともにsouceMapが有効なった状態で出力され
 ```
 $ npm run build:dev
 ```
-
