@@ -76,21 +76,20 @@ const BROWSER_SYNC = {
 # RUN
 
 ## ローカルサーバ起動
-css、ｊｓファイルともにsouceMapが有効なった状態で出力されます。  
-css、ｊｓファイルともにsouceMapが有効になります。  
-デフォルトではhtml、css、ｊｓファイルの変更に応じブラウザが auto reload します。
+css、jsファイルともにsouceMapが有効なった状態で出力されます。  
+デフォルトではhtml、css、jsファイルの変更に応じブラウザが auto reload します。
 ```
 $ npm start
 ```
 
 ## 本番用（production）ビルド
-css、ｊｓファイルともにsouceMapが無効なった状態で出力されます。
+css、jsファイルともにsouceMapが無効なった状態で出力されます。
 ```
 $ npm run build
 ```
 
 ## 開発用（development）ビルド
-css、ｊｓファイルともにsouceMapが有効なった状態で出力されます。  
+css、jsファイルともにsouceMapが有効なった状態で出力されます。  
 また、minimizeが解除されます。
 ```
 $ npm run build:dev
