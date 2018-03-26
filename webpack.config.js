@@ -1,15 +1,15 @@
 /***************************************
 ** Root path name
 ***************************************/
-const ROOT_PATH_NAME = 'htdocs';
+const ROOT_PATH_NAME = 'public';
 
 
 /***************************************
 ** SCSS Setting
 ***************************************/
-const SCSS_BUILD_PATH = '/common/css';
+const SCSS_BUILD_PATH = '/assets/css';
 const SCSS_ENTRY = {
-    'style': './' + ROOT_PATH_NAME + '/common/src/scss/style.scss'
+    'style': './src/scss/style.scss'
 }
 const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 
@@ -17,9 +17,9 @@ const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'sour
 /***************************************
 ** JS Setting
 ***************************************/
-const JS_BUILD_PATH = '/common/js';
+const JS_BUILD_PATH = '/assets/js';
 const JS_ENTRY = {
-    'main': './' + ROOT_PATH_NAME + '/common/src/js/main.js'
+    'main': './src/js/main.js'
 }
 const JS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 
