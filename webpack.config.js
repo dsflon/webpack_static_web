@@ -56,6 +56,7 @@ let scssMinimize = (process.env.npm_lifecycle_event !== 'build:dev');
 module.exports = [
     {
 
+        cache: true,
         entry: JS_ENTRY,
         output: {
             path: `${__dirname}/${ROOT_PATH_NAME}${JS_BUILD_PATH}`,
@@ -84,6 +85,7 @@ module.exports = [
         devtool: (isDev ? JS_SOURCE_MAP_STYLE : '')
     },
     {
+        cache: true,
         watchOptions : {
             aggregateTimeout: 300
         },
