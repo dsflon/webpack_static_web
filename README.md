@@ -25,7 +25,7 @@ auto reloadにも対応しています。
 ## Root path setting
 ルートパス名を設定します。
 ```
-const ROOT_PATH_NAME = 'htdocs';
+const ROOT_PATH_NAME = 'public';
 ```
 
 ## SCSS setting
@@ -33,9 +33,9 @@ const ROOT_PATH_NAME = 'htdocs';
 SCSS_ENTRYオブジェクトでは、プロパティ名がそのままcssファイル名となります。  
 また、プロパティ名を '../style' や 'sample/style' などとすることで出力先ディレクトリを移動させることができます。
 ```
-const SCSS_BUILD_PATH = '/common/css';
+const SCSS_BUILD_PATH = '/assets/css';
 const SCSS_ENTRY = {
-    'style': './' + ROOT_PATH_NAME + '/common/src/scss/style.scss'
+    'style': './src/scss/style.scss'
 }
 const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 ```
@@ -45,9 +45,9 @@ const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'sour
 JS_ENTRYオブジェクトでは、プロパティ名がそのままjsファイル名となります。  
 また、プロパティ名を '../main' や 'sample/main' などとすることで出力先ディレクトリを移動させることができます。
 ```
-const JS_BUILD_PATH = '/common/js';
+const JS_BUILD_PATH = '/assets/js';
 const JS_ENTRY = {
-    'main': './' + ROOT_PATH_NAME + '/common/src/js/main.js'
+    'main': './src/js/main.js'
 }
 const JS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 ```
