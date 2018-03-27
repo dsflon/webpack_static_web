@@ -82,7 +82,8 @@ module.exports = [
         resolve: {
             extensions: ['.js'],
         },
-        devtool: (isDev ? JS_SOURCE_MAP_STYLE : '')
+        devtool: (isDev ? JS_SOURCE_MAP_STYLE : ''),
+        performance: { hints: false },
     },
     {
         cache: true,
@@ -127,14 +128,12 @@ module.exports = [
                 }
             ]
         },
-        resolve: {
-            extensions: ['.scss'],
-        },
         plugins: [
             new ExtractTextPlugin('[name].css'),
             new BrowserSyncPlugin(BROWSER_SYNC)
         ],
-        devtool: (isDev ? SCSS_SOURCE_MAP_STYLE : '')
+        devtool: (isDev ? SCSS_SOURCE_MAP_STYLE : ''),
+        performance: { hints: false },
     }
 ]
 
