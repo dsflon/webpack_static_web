@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// transition
+//
+// ---------------------------------------------------------------------------
+@mixin transition($sec:0.1, $ease:linear, $delay:0) {
+	transition: all $sec+s $ease $delay+s;
+	-webkit-transition: all $sec+s $ease $delay+s;
+}

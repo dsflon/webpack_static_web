@@ -1,0 +1,88 @@
+@charset "utf-8";
+
+.fw  {
+
+	.f-inner {
+		display: block;
+		max-width: $width_main + px;
+		margin: 0 auto;
+		padding: 0;
+		@include clearfix;
+	}
+
+	.clearfix { @include clearfix; }
+
+
+	// -------------------------------------------
+	// 最小横幅
+	// -------------------------------------------
+
+	@if $responsive {
+
+		$index: 1; //最小ブレイクポイント
+		$breakpointWidth : GetDataMap( $breakpointsClean, $index, 'val' ); //ブレイクポイント横幅
+
+		@include max( $breakpointWidth ){
+			min-width: $breakpointWidth + px;
+		}
+
+	}
+
+	// -------------------------------------------
+	// 表示・非表示class
+	// -------------------------------------------
+
+	@mixin SetDisplayBreakpoint( $breakpointName ){
+
+		$count: 0;
+
+		@for $k from 1 through length( $breakpoints ){
+
+			$_index: $k; //インデックス番号
+			$_breakpointName : GetDataMap( $breakpoints, $_index, 'key' ); //ブレイクポイント名前
+
+			// 該当以外のブレイクポイントか判別
+			@if $breakpointName != $_breakpointName {
+
+				//該当ブレイクポイント範囲のみ適用
+				@include only( $breakpointName ){
+
+					.f-display_#{$_breakpointName} { display: none; }
+
+					// 「_over」が複数呼ばれないように
+					@if $breakpointName != 'over' and $count == 0 {
+						.f-display_over { display: none; }
+						$count: $count + 1;
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+	@if $responsive {
+
+		@for $j from 1 through length( $breakpointsClean ){
+
+			$index: $j; //インデックス番号
+			$breakpointName : GetDataMap( $breakpointsClean, $index, 'key' ); //ブレイクポイント名前
+
+			@include SetDisplayBreakpoint( $breakpointName );
+
+			@if $j == length( $breakpointsClean ){
+
+				// $breakpointsCleanで最後に指定している次のブレイクポイント
+				$breakpointName : GetNextKeyMap( $breakpointsClean, $j );
+
+				@include SetDisplayBreakpoint( $breakpointName );
+
+			}
+
+		}
+
+	}
+
+}

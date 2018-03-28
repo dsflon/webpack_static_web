@@ -1,0 +1,70 @@
+@charset "utf-8";
+
+
+// ---------------------------------------------------------------------------
+//
+// Base Setting
+//
+// ---------------------------------------------------------------------------
+
+@mixin flexBase( $wrap: "wrap", $direction:  "row", $justify: "flex-start", $align: "stretch" ){
+
+    display: flex;
+
+    flex-flow: #{$direction} #{$wrap};
+    justify-content: #{$justify};
+    align-items: #{$align};
+
+}
+
+// ---------------------------------------------------------------------------
+//
+// Flex width and margin
+//
+// ---------------------------------------------------------------------------
+
+
+@mixin flex( $class: "f-flex", $gutter: $col_gutter ){
+
+
+    @include flexGutter( $gutter );
+
+    @include SetPerBreakpointMixin( $class, $gutter, $mixin: 'flex' );
+
+}
+
+// ---------------------------------------------------------------------------
+//
+// Column margin left and right
+//
+// ---------------------------------------------------------------------------
+
+
+@mixin flexMg( $class: "f-flex" ){
+
+    @include SetPerBreakpointMixin( $class, $mixin: 'flexMg' );
+
+}
+
+
+// ---------------------------------------------------------------------------
+//
+// Column margin bottom
+//
+// ---------------------------------------------------------------------------
+@mixin flexMb( $class: "f-flex" ){
+
+    @include SetPerBreakpointMixin( $class, $mixin: 'flexMb' );
+
+}
+
+// ---------------------------------------------------------------------------
+//
+// Order
+//
+// ---------------------------------------------------------------------------
+@mixin flexOrder( $class: "f-flex" ){
+
+    @include SetPerBreakpointMixin( $class, $mixin: 'flexOrder' );
+
+}

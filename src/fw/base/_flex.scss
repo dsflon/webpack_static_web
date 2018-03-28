@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// Flex
+//
+// ---------------------------------------------------------------------------
+
+.f-flex{
+
+	@include flexBase();
+	@include flex();
+	@include flexMg();
+	@include flexMb();
+	@include flexOrder();
+
+	&.f-flex_middle {
+		@include flexBase( $align: "center" );
+	}
+
+	&.f-flex_justify {
+		& > * {
+			flex: 1;
+		}
+	}
+
+}

@@ -7,8 +7,6 @@ const Init = () => {
 
 	Common();
 
-	console.log("main");
-
 }
 
 Init();

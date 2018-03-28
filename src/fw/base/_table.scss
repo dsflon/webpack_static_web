@@ -1,0 +1,102 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// Table Base
+//
+// ---------------------------------------------------------------------------
+
+table {
+
+	border-collapse: collapse;
+	border-spacing: 0;
+
+	th,td {
+		padding: 15px;
+		// @include columnWidth( $class );
+		&.f-table_bg_gray { background: $black0; color: $color_text; }
+	}
+
+	&.f-table_horizon {
+		width: 100%;
+		th,td { border-bottom: 1px solid $black20; }
+		th { font-weight: bold; }
+		thead {
+			th,td { border-bottom: 2px solid $black20; }
+		}
+	}
+
+	&.f-table_vertical {
+		width: 100%;
+		th { border-right: 2px solid $black20; font-weight: bold; }
+		td { border-right: 1px solid $black20;
+			&:last-child { border-right: none; }
+		}
+	}
+
+	&.f-table_around {
+		width: 100%;
+		th { border: 1px solid $black20; font-weight: bold; }
+		td { border: 1px solid $black20; }
+		thead {
+			th,td { border-bottom: 2px solid $black20; }
+		}
+	}
+
+	&.f-table_stripe {
+		width: 100%;
+		tbody {
+			tr:nth-child(odd) {
+				th,td { background: $black0; }
+			}
+		}
+	}
+
+	&.f-table_cursor {
+		width: 100%;
+		tbody {
+			tr {
+				&:hover {
+					td { background: $black10; }
+					&:nth-child(odd) {
+						td { background: $black10 !important; }
+					}
+				}
+			}
+		}
+	}
+
+	$class: "f-table";
+	@include SetPerBreakpointMixin( $class, $mixin: 'tableBreak' );
+
+}//table
+
+.f-table_responsive {
+	overflow-x: auto;
+	padding-bottom: 10px;
+
+	&::-webkit-scrollbar { height: 5px; }
+	&::-webkit-scrollbar-thumb {
+		background: $black40; border-radius: 5px;
+	}
+	&::-webkit-scrollbar-track-piece:start {
+		background: $black0; border-radius: 5px;
+	}
+	&::-webkit-scrollbar-track-piece:end {
+		background: $black0; border-radius: 5px;
+	}
+
+	table {
+		width: $width_contents + px;
+	}
+}
+
+
+table {
+	tr {
+		$class: "f-cell";
+
+		@include columnWidth( $class );
+		@include SetPerBreakpointMixin( $class, $mixin: 'tableCell' );
+	}
+}

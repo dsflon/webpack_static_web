@@ -1,0 +1,13 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// diagonal Bg
+//
+// ---------------------------------------------------------------------------
+@mixin diagonalBg($bg:#FFFFFF, $color:rgba(0,0,0,0.2), $width:10, $angle:-45deg) {
+	background-size: $width + px $width + px;
+	background-color: $bg;
+	background-image: -webkit-linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+	background-image: linear-gradient($angle, $color 25%, transparent 25%, transparent 50%, $color 50%, $color 75%, transparent 75%, transparent);
+}

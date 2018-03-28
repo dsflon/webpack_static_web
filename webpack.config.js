@@ -9,7 +9,8 @@ const ROOT_PATH_NAME = 'public';
 ***************************************/
 const SCSS_BUILD_PATH = '/assets/css';
 const SCSS_ENTRY = {
-    'style': './src/scss/style.scss'
+    'style': './src/scss/style.scss',
+    'style2': './src/scss/style2.scss'
 }
 const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 

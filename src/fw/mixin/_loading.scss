@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+// ---------------------------------------------------------------------------
+//
+// loading
+//
+// ---------------------------------------------------------------------------
+@mixin loading($size:25px,$width:4px,$baseColor:rgba(0,0,0, 0.4),$barColor:rgba(0,0,0, 0.7),$speed:0.6) {
+	border: $width solid $baseColor;
+	border-left: $width solid $barColor;
+	animation: loading $speed + s infinite linear;
+	border-radius: 50%;
+	width: $size;
+	height: $size;
+	@keyframes loading {
+		0% { transform: rotate(0deg);}
+		100% {transform: rotate(360deg);}
+	}
+}
