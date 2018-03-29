@@ -10,7 +10,7 @@ const ROOT_PATH_NAME = 'public';
 const SCSS_BUILD_PATH = '/assets/css';
 const SCSS_ENTRY = {
     'style': './src/scss/style.scss',
-    // 'style2': './src/scss/style2.scss'
+    'style2/style2': './src/scss/style2.scss'
 }
 const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 
@@ -20,7 +20,8 @@ const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'sour
 ***************************************/
 const JS_BUILD_PATH = '/assets/js';
 const JS_ENTRY = {
-    'main': './src/js/main.js'
+    'main': './src/js/main.js',
+    'sub': './src/js/sub.js'
 }
 const JS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 
@@ -44,6 +45,17 @@ const BROWSER_SYNC = {
 
 
 /***************************************
+** devServer Setting
+***************************************/
+const DEV_SERVER = {
+    contentBase: ROOT_PATH_NAME,
+    port: 3000,
+    open: false,
+    watchContentBase: true
+}
+
+
+/***************************************
 ** Webpack Config
 ***************************************/
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
@@ -51,16 +63,19 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 let mode = process.argv.indexOf("production") !== -1 ? 'production' : 'development';
 if( process.argv.indexOf("--watch") !== -1 ) mode = 'development';
+if( process.argv.indexOf("webpack-dev-server") !== -1 ) mode = 'development';
+if( process.env.npm_lifecycle_script.split("webpack-dev-server")[1] ) mode = 'development';
 let isDev = (mode === 'development');
 let scssMinimize = (process.env.npm_lifecycle_event !== 'build:dev');
 
 module.exports = [
     {
-        stats: { children: false },
         cache: true,
         entry: JS_ENTRY,
+        stats: { children: false },
         output: {
             path: `${__dirname}/${ROOT_PATH_NAME}${JS_BUILD_PATH}`,
+            publicPath: `${JS_BUILD_PATH}`,
             filename: '[name].js'
         },
 
@@ -85,6 +100,7 @@ module.exports = [
         },
         devtool: (isDev ? JS_SOURCE_MAP_STYLE : ''),
         performance: { hints: false },
+        // devServer: DEV_SERVER
     },
     {
         cache: true,
@@ -92,6 +108,7 @@ module.exports = [
         entry: SCSS_ENTRY,
         output: {
             path: `${__dirname}/${ROOT_PATH_NAME}${SCSS_BUILD_PATH}`,
+            publicPath: `${SCSS_BUILD_PATH}`,
             filename: '[name].css'
         },
         module: {
@@ -132,7 +149,7 @@ module.exports = [
             new BrowserSyncPlugin(BROWSER_SYNC)
         ],
         devtool: (isDev ? SCSS_SOURCE_MAP_STYLE : ''),
-        performance: { hints: false },
+        performance: { hints: false }
     }
 ]
 
