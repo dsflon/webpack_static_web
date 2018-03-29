@@ -55,7 +55,7 @@ let scssMinimize = (process.env.npm_lifecycle_event !== 'build:dev');
 
 module.exports = [
     {
-
+        stats: { children: false },
         cache: true,
         entry: JS_ENTRY,
         output: {
@@ -86,6 +86,7 @@ module.exports = [
         performance: { hints: false },
     },
     {
+        stats: { children: false },
         cache: true,
         watchOptions : {
             aggregateTimeout: 300
