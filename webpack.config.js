@@ -10,7 +10,7 @@ const ROOT_PATH_NAME = 'public';
 const SCSS_BUILD_PATH = '/assets/css';
 const SCSS_ENTRY = {
     'style': './src/scss/style.scss',
-    'style2': './src/scss/style2.scss'
+    // 'style2': './src/scss/style2.scss'
 }
 const SCSS_SOURCE_MAP_STYLE = 'inline-source-map'; // 'inline-source-map', 'source-map', etc.
 
@@ -56,7 +56,7 @@ let scssMinimize = (process.env.npm_lifecycle_event !== 'build:dev');
 
 module.exports = [
     {
-
+        stats: { children: false },
         cache: true,
         entry: JS_ENTRY,
         output: {
@@ -88,9 +88,7 @@ module.exports = [
     },
     {
         cache: true,
-        watchOptions : {
-            aggregateTimeout: 300
-        },
+        stats: { children: false },
         entry: SCSS_ENTRY,
         output: {
             path: `${__dirname}/${ROOT_PATH_NAME}${SCSS_BUILD_PATH}`,
