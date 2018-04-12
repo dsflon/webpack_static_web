@@ -41,7 +41,6 @@ const BROWSER_SYNC = {
     open: false
 }
 
-
 /***************************************
 ** Webpack Config
 ***************************************/
@@ -110,18 +109,17 @@ module.exports = [
                                     minimize: scssMinimize
                                 }
                             },
-                            { // autoprefixer を利用するために postcss を利用
-                                loader: 'postcss-loader',
-                                options: {
-                                    sourceMap: isDev,
-                                    minimize: scssMinimize
-                                }
-                            },
                             { // Sassをバンドルするための機能
                                 loader: 'sass-loader',
                                 options: {
                                     sourceMap: isDev,
                                     minimize: scssMinimize
+                                }
+                            },
+                            { // autoprefixer を利用するために postcss を利用
+                                loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: isDev
                                 }
                             }
                         ]
