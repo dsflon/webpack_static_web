@@ -109,15 +109,14 @@ module.exports = [
                                     minimize: scssMinimize
                                 }
                             },
-                            { // Sassをバンドルするための機能
-                                loader: 'sass-loader',
-                                options: {
-                                    sourceMap: isDev,
-                                    minimize: scssMinimize
-                                }
-                            },
                             { // autoprefixer を利用するために postcss を利用
                                 loader: 'postcss-loader',
+                                options: {
+                                    sourceMap: isDev
+                                }
+                            },
+                            { // Sassをバンドルするための機能
+                                loader: 'sass-loader',
                                 options: {
                                     sourceMap: isDev
                                 }

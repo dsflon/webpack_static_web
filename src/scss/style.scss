@@ -8,3 +8,27 @@ body {
         display: flex;
     }
 }
+
+
+@media all and (min-width: 640px) {
+    div {
+        background: #333;
+    }
+}
+@media all and (min-width: 640px) {
+    p {
+        background: #222;
+    }
+}
+
+
+@media all and (min-width: 480px) {
+    div {
+        background: #000;
+    }
+}
+@media all and (min-width: 480px) {
+    p {
+        background: #FFF;
+    }
+}
