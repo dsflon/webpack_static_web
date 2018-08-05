@@ -4,6 +4,7 @@ prepros.cfg
 .map
 .htaccess
 node_modules
+package-lock.json
 wp-content/advanced-cache.php
 wp-content/wp-cache-conﬁg.php
 wp-content/cache/
